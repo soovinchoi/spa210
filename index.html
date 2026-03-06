@@ -64,8 +64,9 @@ html,body{
   display:inline-block;
   padding:14px 36px;
   border-radius:999px;
-  background:linear-gradient(135deg,#f6e7b7,#e0b973);
-  color:#2a1a00;
+  border:1.5px solid #f4f1ea;
+  background:transparent;
+  color:#f4f1ea;
   font-size:14px;
   letter-spacing:.25em;
   font-weight:700;
@@ -241,6 +242,7 @@ const cardWrap=document.querySelector(".cardWrap");
 enterBtn.onclick=()=>{
   intro.style.display="none";
 
+  // music fade-in
   zen.volume=0;
   zen.play();
   let v=0;
@@ -249,11 +251,13 @@ enterBtn.onclick=()=>{
     else clearInterval(fade);
   },200);
 
+  // owl fly
   owl.animate(
     [{left:"-300px"},{left:"50%",transform:"translateX(-50%)"}],
     {duration:5500,fill:"forwards",easing:"ease-out"}
   );
 
+  // letter drop (1s earlier)
   setTimeout(()=>{
     letter.animate(
       [
@@ -263,9 +267,10 @@ enterBtn.onclick=()=>{
       ],
       {duration:1400,fill:"forwards",easing:"ease-out"}
     );
-  },5600);
+  },4600);
 
-  setTimeout(()=>{hint.style.opacity=1},8800);
+  // hint earlier
+  setTimeout(()=>{hint.style.opacity=1},7800);
 };
 
 letter.onclick=()=>{
