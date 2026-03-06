@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SPA210 Invitation</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Cormorant+Garamond:wght@300;400&display=swap" rel="stylesheet">
+
+<style>
+html,body{
+  margin:0;
+  height:100%;
+  background:#0f0f10;
+  font-family:'Cormorant Garamond', serif;
+  overflow:hidden;
+}
+
+/* ===== INTRO (STATIC, NO ZOOM) ===== */
+#intro{
+  position:fixed;
+  inset:0;
+  background:#0f0f10;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  z-index:10;
+}
+#intro img{
+  position:absolute;
+  max-width:100%;
+  max-height:100%;
+  object-fit:contain;
+}
+.overlay{
+  position:absolute;
+  inset:0;
+  background:rgba(0,0,0,0.45);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.introText{
+  text-align:center;
+  font-family:'Cinzel', serif;
+  font-size:28px;
+  letter-spacing:0.18em;
+  color:#f4f1ea;
+}
+.enterBtn{
+  margin-top:36px;
+  padding:14px 28px;
+  border:1px solid #f4f1ea;
+  font-size:14px;
+  letter-spacing:3px;
+  cursor:pointer;
+}
+
+/* ===== OWL ===== */
+#owl{
+  position:absolute;
+  top:8%;
+  left:-260px;
+}
+.owlImg{ width:280px; }
+
+@keyframes fly{
+  from{ left:-260px; }
+  to{ left:50%; transform:translateX(-50%); }
+}
+@keyframes floaty{
+  0%{ transform: translateY(0); }
+  50%{ transform: translateY(-16px); }
+  100%{ transform: translateY(0); }
+}
+
+/* ===== LETTER ===== */
+#letter{
+  position:absolute;
+  top:40%;
+  left:50%;
+  transform:translateX(-50%);
+  opacity:0;
+  cursor:pointer;
+}
+.letterImg{ width:300px; }
+
+@keyframes drop{
+  0%{ transform: translate(-50%,-220px); opacity:0; }
+  70%{ transform: translate(-50%,20px); opacity:1; }
+  100%{ transform: translate(-50%,0); opacity:1; }
+}
+
+/* ===== TAP HINT ===== */
+#hint{
+  position:absolute;
+  top:calc(40% + 340px);
+  left:50%;
+  transform:translateX(-50%);
+  font-family:'Cinzel', serif;
+  font-size:16px;
+  letter-spacing:4px;
+  color:#f4f1ea;
+  opacity:0;
+}
+
+/* ===== INVITE ===== */
+#invite{
+  position:fixed;
+  inset:0;
+  display:none;
+  align-items:center;
+  justify-content:center;
+}
+.scrollWrap{
+  position:relative;
+  width:90vw;
+  max-width:760px;
+}
+.scrollTop,.scrollBottom{
+  position:absolute;
+  left:0;
+  width:100%;
+  height:50%;
+  background:#0f0f10;
+  z-index:2;
+}
+.scrollTop{ top:0; transform-origin:top; animation:openTop 1.2s ease-out forwards; }
+.scrollBottom{ bottom:0; transform-origin:bottom; animation:openBottom 1.2s ease-out forwards; }
+@keyframes openTop{ to{ transform:scaleY(0);} }
+@keyframes openBottom{ to{ transform:scaleY(0);} }
+
+.card{
+  width:100%;
+  border-radius:8px;
+  box-shadow:0 24px 70px rgba(0,0,0,0.6);
+}
+</style>
+</head>
+
+<body>
+
+<!-- INTRO -->
+<div id="intro">
+  <img src="spa.png" alt="">
+  <div class="overlay">
+    <div class="introText">
+      SPA210<br>Private Opening
+      <div class="enterBtn">Enter</div>
+    </div>
+  </div>
+</div>
+
+<!-- OWL -->
+<div id="owl"><img src="owl.png" class="owlImg"></div>
+
+<!-- LETTER -->
+<div id="letter"><img src="letter.png" class="letterImg"></div>
+
+<div id="hint">Tap the letter</div>
+
+<!-- INVITE -->
+<div id="invite">
+  <div class="scrollWrap">
+    <div class="scrollTop"></div>
+    <div class="scrollBottom"></div>
+    <img src="invite.png" class="card">
+  </div>
+</div>
+
+<!-- SOUND -->
+<audio id="zen" loop>
+  <source src="zen.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+const intro = document.getElementById("intro");
+const enterBtn = document.querySelector(".enterBtn");
+const owl = document.getElementById("owl");
+const letter = document.getElementById("letter");
+const hint = document.getElementById("hint");
+const invite = document.getElementById("invite");
+const zen = document.getElementById("zen");
+
+enterBtn.onclick = ()=>{
+  intro.style.display="none";
+
+  zen.volume=0.22;
+  zen.play();
+
+  owl.style.animation="fly 5.5s ease-out forwards, floaty 3.5s ease-in-out infinite";
+
+  setTimeout(()=>{
+    letter.style.animation="drop 1.4s ease-out forwards";
+  },5600);
+
+  setTimeout(()=>{
+    hint.style.opacity=1;
+  },8800);
+};
+
+letter.onclick = ()=>{
+  owl.style.display="none";
+  letter.style.display="none";
+  hint.style.display="none";
+  invite.style.display="flex";
+};
+</script>
+
+</body>
+</html>
